@@ -69,6 +69,9 @@ def fromJson(cursor):
                 cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
             except Exception as e:
                 print e
+            except KeyError as e:
+                print e, e.__dict__
+
 
 cursor = run.getConnection().cursor()
 fillDb(cursor)
