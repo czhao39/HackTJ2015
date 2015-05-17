@@ -24,6 +24,12 @@ body {
     -o-transition-property: -o-transform;
     transition-property: transform;
 }
+#icon-name{
+    padding-left:30px;
+}
+#tweet-scroll li{
+    font-size:30px;
+}
 #logo:hover{
     -webkit-transform:rotate(360deg);
     -moz-transform:rotate(360deg);
@@ -142,7 +148,7 @@ body {
 }
 ul.newsticker {
     position: relative;
-    font: bold 10px Verdana;
+    /*font: bold 10px Verdana;*/
     list-style-type: none;
     margin: 0;
     padding: 0;
