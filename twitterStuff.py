@@ -6,7 +6,7 @@ import run
 def fillDb(cursor, api):
     jsonStr = open("static/data/keywords.json").read()
     jsonDict = simplejson.JSONDecoder().decode(jsonStr)
-    statesJsonStr = open("static/data/states.json")
+    statesJsonStr = open("static/data/states.json").read()
     statesJsonDict = simplejson.JSONDecoder().decode(statesJsonStr)
     mainDict = {}
     for candidate in jsonDict.items():
@@ -15,7 +15,7 @@ def fillDb(cursor, api):
         for state in statesJsonDict.items():
             statuses = []
             for term in jsonDict[candidate[0]]:
-                statuses.extend(getSearch(twit=api, query=term + " place:"+asoigjvja, count=100))
+                statuses.extend(getSearch(twit=api, query=term + " place:"+state[1], count=100))
             tweets = []
             for status in statuses:
                 tweets.append(status._text)
