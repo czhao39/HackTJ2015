@@ -6,6 +6,9 @@
     font-size:30px;
     color:white;
 }
+#logo{
+    width=64px;
+}
 #dem{
     /*border:5px solid #021bbd;*/
     /*border:5px solid #4EB1CB;*/
@@ -52,4 +55,8 @@
     margin-right:auto;
     margin-top:10px;
     margin-bottom:10px;
+}
+#map{
+    display:block;
+    margin:auto;
 }
