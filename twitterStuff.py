@@ -1,5 +1,5 @@
 import twitter
-from greysFancyTwitterGarbage import *
+from twitterHelper import *
 import requests
 
 import simplejson
