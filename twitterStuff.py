@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import twitter
 from twitterHelper import *
 import simplejson
@@ -60,17 +62,19 @@ def fillDb(cursor):
 def fromJson(cursor):
     dc = simplejson.JSONDecoder()
     mainDict = dc.decode(open('antistupidity.json').read())
-    print mainDict
+
+    print('mainDict items:', len(mainDict.items()))
 
     for candidate in mainDict.items():
+        print('canidate[1] items:', len(candidate[1].items()))
         for state in candidate[1].items():
             try:
                 print (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative'])
                 cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s);", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
             except simplejson.scanner.JSONDecodeError as e:
-                print e
+                print 'Error:',e
             except KeyError as e:
-                print e, e.__dict__
+                print 'Error:', e, e.__dict__
 
 
 cursor = run.getConnection().cursor()

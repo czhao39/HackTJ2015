@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import simplejson
 import requests
 from random import randint
