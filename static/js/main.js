@@ -19,7 +19,26 @@ function drawChart(clr, sid) {
 }
 var a = '';
 $(document).ready(function() {
-    $("#ticker").webTicker();
+    $("#ticker").hide();
+    $.getJSON("data/tweet.json", function(data) {
+        $("#ticker").show();
+        for (i = 0; i < data.length / 2; i++) {
+            if (data[i] == undefined) {
+                continue;
+            }
+            for (j = 0; j < data[i].length / 2; j++) {
+                if (data[i][j] == undefined) {
+                    continue;
+                }
+                for (k = 0; k < data[i][j].length; k++) {
+                    $("<li>" + data[i][j][k] + "</li>").appendTo("#ticker");
+                }
+            }
+        }
+        $("#ticker").webTicker({
+            speed: 100
+        });
+    });
     $("#logo").click(function() {
         if (a != '') {
             a = '';
