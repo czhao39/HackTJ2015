@@ -10,6 +10,67 @@
         <link rel="shortcut icon" href="favicon.ico"/>
 		<script>
         var root;
+        var code_to_state = {
+    "AL": "Alabama",
+    "AK": "Alaska",
+    "AS": "American Samoa",
+    "AZ": "Arizona",
+    "AR": "Arkansas",
+    "CA": "California",
+    "CO": "Colorado",
+    "CT": "Connecticut",
+    "DE": "Delaware",
+    "DC": "District Of Columbia",
+    "FM": "Federated States Of Micronesia",
+    "FL": "Florida",
+    "GA": "Georgia",
+    "GU": "Guam",
+    "HI": "Hawaii",
+    "ID": "Idaho",
+    "IL": "Illinois",
+    "IN": "Indiana",
+    "IA": "Iowa",
+    "KS": "Kansas",
+    "KY": "Kentucky",
+    "LA": "Louisiana",
+    "ME": "Maine",
+    "MH": "Marshall Islands",
+    "MD": "Maryland",
+    "MA": "Massachusetts",
+    "MI": "Michigan",
+    "MN": "Minnesota",
+    "MS": "Mississippi",
+    "MO": "Missouri",
+    "MT": "Montana",
+    "NE": "Nebraska",
+    "NV": "Nevada",
+    "NH": "New Hampshire",
+    "NJ": "New Jersey",
+    "NM": "New Mexico",
+    "NY": "New York",
+    "NC": "North Carolina",
+    "ND": "North Dakota",
+    "MP": "Northern Mariana Islands",
+    "OH": "Ohio",
+    "OK": "Oklahoma",
+    "OR": "Oregon",
+    "PW": "Palau",
+    "PA": "Pennsylvania",
+    "PR": "Puerto Rico",
+    "RI": "Rhode Island",
+    "SC": "South Carolina",
+    "SD": "South Dakota",
+    "TN": "Tennessee",
+    "TX": "Texas",
+    "UT": "Utah",
+    "VT": "Vermont",
+    "VI": "Virgin Islands",
+    "VA": "Virginia",
+    "WA": "Washington",
+    "WV": "West Virginia",
+    "WI": "Wisconsin",
+    "WY": "Wyoming"
+};
 		$(document).ready(function() {
             svg = document.getElementById('map');
             svg.addEventListener("load", function() {
@@ -41,24 +102,35 @@
             });
             $("button[data-over]").mouseover(function(e) {
                 $("#img-overlay img").attr("src", "/img/pic/" + $(this).attr("data-over"));
-                var ct = $(this).parent().parent().parent().attr("id");
-                $("#img-overlay img").css("border-color", ct == "dem" ? "#717ECD" : "#CF5C60");
+                var ct = $(this).hasClass("dem");
+                $("#img-overlay img").css("border-color", ct ? "#717ECD" : "#CF5C60");
                 $("#img-overlay").show();
             }).mouseout(function() {
                 $("#img-overlay").hide();
             });
             $("#dem button, #rep button").click(function(e) {
                 e.preventDefault();
+                $("#state-table-body").empty();
+                var ct = $(this).hasClass("dem") ? "#0000FF" : "#FF0000";
                 $.getJSON("/nation?p=" + encodeURIComponent($(this).text()), function(data) {
                     for (var key in data) {
+                        pos = data[key][0];
+                        neg = data[key][1];
+                        total = pos + neg;
+                        ppos = (pos / total * 100).toFixed(2);
+                        pneg = (neg / total * 100).toFixed(2);
+                        $("#state-table-body").append("<tr><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
                         // hardcoded michigan because separation
+                        var clr = ct;
                         if (key == "MI") {
                             key = "MI-";
-                            data["MI-"] = data["MI"];
-                            svg.getElementById("SP-").style.fill = data["MI"];
+                            data["MI-"] = clr;
+                            svg.getElementById("SP-").style.fill = clr;
+                            svg.getElementById("SP-").style.opacity = pos/total;
                         }
                         var elm = svg.getElementById(key);
-                        elm.style.fill = data[key];
+                        elm.style.fill = clr;
+                        elm.style.opacity = pos/total;
                     }
                 });
             });
@@ -77,35 +149,35 @@
         <div id="input" class="row">
             <div class="col-md-6">
                 <div id="dem">
-                    <button id="dembut" type="button" class="btn btn-default">Democrat</button>
+                    <button id="dembut" type="button" class="btn btn-default dem">Democrat</button>
                     <div class="row">
                         <div class=col-md-12">
-                            <button type="button" class="btn btn-default" data-over="biden.jpg">Joe Biden</button>
-                            <button type="button" class="btn btn-default" data-over="clinton.jpg">Hillary Clinton</button>
-                            <button type="button" class="btn btn-default" data-over="omalley.jpg">Martin O'Malley</button>
-                            <button type="button" class="btn btn-default" data-over="sanders.jpg">Bernie Sanders</button>
-                            <button type="button" class="btn btn-default" data-over="warren.jpg">Elizabeth Warren</button>
+                            <button type="button" class="btn btn-default dem" data-over="biden.jpg">Joe Biden</button>
+                            <button type="button" class="btn btn-default dem" data-over="clinton.jpg">Hillary Clinton</button>
+                            <button type="button" class="btn btn-default dem" data-over="omalley.jpg">Martin O'Malley</button>
+                            <button type="button" class="btn btn-default dem" data-over="sanders.jpg">Bernie Sanders</button>
+                            <button type="button" class="btn btn-default dem" data-over="warren.jpg">Elizabeth Warren</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div id="rep">
-                    <button id="repbut" type="button" class="btn btn-default">Republican</button>
+                    <button id="repbut" type="button" class="btn btn-default rep">Republican</button>
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-default" data-over="bush.jpg">Jeb Bush</button>
-                            <button type="button" class="btn btn-default" data-over="christie.jpg">Chris Christie</button>
-                            <button type="button" class="btn btn-default" data-over="huckabee.jpg">Mike Huckabee</button>
-                            <button type="button" class="btn btn-default" data-over="perry.jpg">Rick Perry</button>
-                            <button type="button" class="btn btn-default" data-over="santorum.jpg">Rick Santorum</button>
+                            <button type="button" class="btn btn-default rep" data-over="bush.jpg">Jeb Bush</button>
+                            <button type="button" class="btn btn-default rep" data-over="christie.jpg">Chris Christie</button>
+                            <button type="button" class="btn btn-default rep" data-over="huckabee.jpg">Mike Huckabee</button>
+                            <button type="button" class="btn btn-default rep" data-over="perry.jpg">Rick Perry</button>
+                            <button type="button" class="btn btn-default rep" data-over="santorum.jpg">Rick Santorum</button>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-default" data-over="carson.jpg">Dr. Ben Carson</button>
-                            <button type="button" class="btn btn-default" data-over="cruz.jpg">Ted Cruz</button>
-                            <button type="button" class="btn btn-default" data-over="paul.jpg">Rand Paul</button>
-                            <button type="button" class="btn btn-default" data-over="rubio.jpg">Marco Rubio</button>
-                            <button type="button" class="btn btn-default" data-over="walker.jpg">Scott Walker</button>
+                            <button type="button" class="btn btn-default rep" data-over="carson.jpg">Dr. Ben Carson</button>
+                            <button type="button" class="btn btn-default rep" data-over="cruz.jpg">Ted Cruz</button>
+                            <button type="button" class="btn btn-default rep" data-over="paul.jpg">Rand Paul</button>
+                            <button type="button" class="btn btn-default rep" data-over="rubio.jpg">Marco Rubio</button>
+                            <button type="button" class="btn btn-default rep" data-over="walker.jpg">Scott Walker</button>
                         </div>
                     </div>
                 </div>

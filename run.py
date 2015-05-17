@@ -17,7 +17,8 @@ STATES = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID'
 def getNation():
     db = dict()
     for i in STATES:
-        db[i] = '#ff0000'
+        # pos, neg
+        db[i] = [7483, 8294]
     return jsonify(**db)
 
 
