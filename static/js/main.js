@@ -39,8 +39,10 @@ $(document).ready(function() {
                     if (sid == "MI-" || sid == "SP-") {
                         sid = "MI";
                     }
-                    $.getJSON("/state?s=" + encodeURIComponent(sid), function(data) {
-                        console.log(data);
+                    $("#state-table-body tr").each(function(index, value) {
+                        if ($(this).attr("data-state") == sid) {
+                            $(document).scrollTop($(this).position().top);
+                        }
                     });
                 });
                 svg.addEventListener("mousemove", function(e) {
@@ -67,7 +69,10 @@ $(document).ready(function() {
 
     $(".dem").each(function(index,value) {
         var tmp = $(this);
-        $.getJSON("/nation?p=" + encodeURIComponent(tmp.text()), function(data) {
+        if (!tmp.attr("data-over")) {
+            return;
+        }
+        $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
             for (var key in data) {
@@ -81,7 +86,10 @@ $(document).ready(function() {
 
     $(".rep").each(function(index, value) {
         var tmp = $(this);
-        $.getJSON("/nation?p=" + encodeURIComponent(tmp.text()), function(data) {
+        if (!tmp.attr("data-over")) {
+            return;
+        }
+        $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
             for (var key in data) {
@@ -101,6 +109,9 @@ $(document).ready(function() {
         $("#img-overlay").css({'top':my+20, 'left':mx+20});
     });
     $("button[data-over]").mouseover(function(e) {
+        if ($(this).attr("id") == "dembut" || $(this).attr("id") == "repbut") {
+            return;
+        }
         $("#img-overlay img").attr("src", "/img/pic/" + $(this).attr("data-over") + a + ".jpg");
         var ct = $(this).hasClass("dem");
         $("#img-overlay img").css("border-color", ct ? "#717ECD" : "#CF5C60");
@@ -113,15 +124,23 @@ $(document).ready(function() {
         $("#state-table-body").empty();
         var ct = $(this).hasClass("dem") ? "rgba(0,0,255," : "rgba(255,0,0,";
         isDem = $(this).hasClass("dem");
-        $.getJSON("/nation?p=" + encodeURIComponent($(this).text()), function(data) {
+        $.getJSON("/nation?p=" + encodeURIComponent($(this).attr("data-over")), function(data) {
             cache = data;
+            if (Object.keys(data).length != 50) {
+                console.log("Warning: Wrong number of items! #" + Object.keys(data).length);
+                console.log(data);
+            }
             for (var key in data) {
                 pos = data[key][0];
                 neg = data[key][1];
                 total = pos + neg;
                 ppos = (pos / total * 100).toFixed(2);
                 pneg = (neg / total * 100).toFixed(2);
-                $("#state-table-body").append("<tr><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
+                if (pos == 0 && neg == 0) {
+                    ppos = 0.00;
+                    pneg = 0.00;
+                }
+                $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
                 // hardcoded michigan because separation
                 var clr = ct;
                 if (key == "MI") {
@@ -130,6 +149,7 @@ $(document).ready(function() {
                     svg.getElementById("SP-").style.fill = ct+pos/total+")";
                 }
                 var elm = svg.getElementById(key);
+                elm.style.fill = '#e0e0e0';
                 elm.style.fill = ct+pos/total+")";
             }
         });
