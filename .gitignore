@@ -1,2 +1,4 @@
 *.pyc
 vEnv/
+.idea/
+*.iml
