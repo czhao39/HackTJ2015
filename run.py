@@ -15,11 +15,23 @@ app.config['DEBUG'] = True
 # return json if possible
 
 STATES = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+CANDIDATES = ['biden', 'clinton', 'omalley', 'sanders', 'warren', 'bush', 'carson', 'christie', 'cruz', 'huckabee', 'paul', 'perry', 'rubio', 'walker', 'santorum']
 
 def getConnection():
     urlparse.uses_netloc.append("postgres")
     url = urlparse.urlparse(os.environ["DATABASE_URL"])
     return psycopg2.connect(database=url.path[1:],user=url.username,password=url.password,host=url.hostname,port=url.port)
+
+@app.route('/random')
+def fillRandom():
+    conn = getConnection()
+    cursor = conn.cursor()
+    for c in CANDIDATES:
+        for s in STATES:
+            cursor.execute("INSERT INTO tweets (candidate, state, pos, neg, neu, color) VALUES (%s,%s,%s,%s,%s,0)", (c, s, random() * 1000, random() * 1000, random() * 1000))
+    conn.commit()
+    conn.close()
+    return 'Test data generated!'
 
 @app.route('/testdb')
 def testDatabase():
@@ -39,26 +51,17 @@ def getNation():
     p = request.args.get('p')
     conn = getConnection()
     cursor = conn.cursor()
-    cursor.execute("SELECT state, pos, neg FROM tweets WHERE candidate = %s", [p])
+    cursor.execute("SELECT state, pos, neg, neu FROM tweets WHERE candidate = %s", [p])
     rs = cursor.fetchall()
     conn.close()
     db = dict()
     for i in rs:
-        db[i[0]] = [i[1], i[2]]
+        db[i[0]] = [i[1], i[2], i[3]]
     for j in STATES:
         if not j in db:
-            db[j] = [0, 0]
+            db[j] = [0, 0, 0]
     assert len(db) >= 50
     return jsonify(**db)
-
-# GET request for when someone clicks on a state
-# example: /state?s=va
-@app.route('/state')
-def getState():
-    state = request.args.get('s')
-    tmp = dict()
-    tmp['state'] = state
-    return jsonify(tmp)
 
 @app.route('/')
 def root():

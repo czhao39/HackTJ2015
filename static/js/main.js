@@ -122,7 +122,7 @@ $(document).ready(function() {
     $("#dem button, #rep button").click(function(e) {
         e.preventDefault();
         $("#state-table-body").empty();
-        var ct = $(this).hasClass("dem") ? "rgba(0,0,255," : "rgba(255,0,0,";
+        //var ct = $(this).hasClass("dem") ? "rgba(0,0,255," : "rgba(255,0,0,";
         isDem = $(this).hasClass("dem");
         $.getJSON("/nation?p=" + encodeURIComponent($(this).attr("data-over")), function(data) {
             cache = data;
@@ -133,6 +133,8 @@ $(document).ready(function() {
             for (var key in data) {
                 pos = data[key][0];
                 neg = data[key][1];
+                neu = data[key][2];
+                complete = pos + neg + neu;
                 total = pos + neg;
                 ppos = (pos / total * 100).toFixed(2);
                 pneg = (neg / total * 100).toFixed(2);
@@ -140,18 +142,27 @@ $(document).ready(function() {
                     ppos = 0.00;
                     pneg = 0.00;
                 }
-                $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
+                $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td><td>" + complete + " tweets</td></tr>");
                 // hardcoded michigan because separation
-                var clr = ct;
+                //var clr = ct;
+                if (!isDem) {
+                    tmp = neg
+                    neg = pos
+                    pos = tmp
+                }
+                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(total/complete*128+128) + ")";
                 if (key == "MI") {
                     key = "MI-";
-                    data["MI-"] = clr;
-                    svg.getElementById("SP-").style.fill = '#e0e0e0';
-                    svg.getElementById("SP-").style.fill = ct+pos/total+")";
+                    data["MI-"] = data["MI"];
+                    svg.getElementById("SP-").style.fill = '#fff';
+                    svg.getElementById("SP-").style.fill = filstr;
+                    //svg.getElementById("SP-").style.fill = ct+pos/total+")";
                 }
+                console.log(filstr);
                 var elm = svg.getElementById(key);
-                elm.style.fill = '#e0e0e0';
-                elm.style.fill = ct+pos/total+")";
+                elm.style.fill = '#fff';
+                elm.style.fill = filstr;
+                //elm.style.fill = ct+pos/total+")";
             }
         });
     });
