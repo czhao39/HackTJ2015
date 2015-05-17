@@ -91,7 +91,7 @@ $(document).ready(function() {
             tmp.css("background", "-ms-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);");
             tmp.css("background", "-o-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);");
             tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
-            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#4478ff), color-stop(0%,#ffffff));");
+            tmp.css("background", "-webkit-gradient(linear, left top, right top, color-stop(" + Math.round(amt * 100) + "%,#4478ff), color-stop(0%,#ffffff));");
             tmp.css("background", "linear-gradient(to right,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);");
         });
     });
@@ -122,7 +122,11 @@ $(document).ready(function() {
     $(window).mousemove(function(e) {
         mx = e.pageX;
         my = e.pageY;
-        $("#img-overlay").css({'top':my+20, 'left':mx+20});
+        if($("#img-overlay").width() + mx + 30 >= $(window).width()) {
+            $("#img-overlay").css({'top':my+20, 'right':mx+20});
+        } else {
+            $("#img-overlay").css({'top':my+20, 'left':mx+20});
+        }
     });
     $("button[data-over]").mouseover(function(e) {
         if ($(this).attr("id") == "dembut" || $(this).attr("id") == "repbut") {
