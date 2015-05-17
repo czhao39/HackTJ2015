@@ -19,6 +19,7 @@ function drawChart(clr, sid) {
 }
 var a = '';
 $(document).ready(function() {
+    $("#ticker").webTicker();
     $("#logo").click(function() {
         if (a != '') {
             a = '';

@@ -149,3 +149,6 @@ ul.newsticker li {
     margin: 0;
     padding-right: 15px;
 }
+#ticker li{
+    color:white;
+}
