@@ -11,4 +11,4 @@ import sys
 
 if __name__ == '__main__':
     # probably should use gunicorn or something
-    app.run(port=int(sys.argv[1]))
+    app.run(host='0.0.0.0', port=int(sys.argv[1]))
