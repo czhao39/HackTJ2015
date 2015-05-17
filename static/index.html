@@ -51,8 +51,11 @@
                             if (sid == "MI-" || sid == "SP-") {
                                 sid = "MI";
                             }
-                            $.getJSON("/state?s=" + encodeURIComponent(sid), function(data) {
-                                console.log(data);
+                            $("#state-table-body tr").each(function(i, v) {
+                                if ($(this).attr("data-state") == sid) {
+                                    $(document).scrollTop($(this).position().top);
+                                    return;
+                                }
                             });
                         });
                         svg.addEventListener("mousemove", function(e) {
@@ -104,7 +107,7 @@
                         total = pos + neg;
                         ppos = (pos / total * 100).toFixed(2);
                         pneg = (neg / total * 100).toFixed(2);
-                        $("#state-table-body").append("<tr><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
+                        $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td></tr>");
                         // hardcoded michigan because separation
                         var clr = ct;
                         if (key == "MI") {
