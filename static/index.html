@@ -15,14 +15,22 @@
             svg.addEventListener("load", function() {
                 svg = svg.contentDocument;
                 root = svg.getElementsByTagName('svg')[0];
-                /*paths = root.getElementsByTagName('path');
+                paths = root.getElementsByTagName('path');
 			    for (i = 0; i < paths.length; i++) {
 				    var pn = paths[i].id;
 				    var elm = svg.getElementById(pn);
                     if (elm != null) {
-                        elm.style.fill = "#FFFFFF";
+                        elm.addEventListener("click", function() {
+                            var sid = this.id;
+                            if (sid == "MI-" || sid == "SP-") {
+                                sid = "MI";
+                            }
+                            $.getJSON("/state?s=" + encodeURIComponent(sid), function(data) {
+                                console.log(data);
+                            });
+                        });
                     }
-			    }*/
+			    }
             });
             var mx = 0;
             var my = 0;
@@ -109,7 +117,7 @@
         <div id="state-table">
             <table class="table">
                 <thead><th>State</th><th>Positive Total</th><th>Positive %</th><th>Negative Total</th><th>Negative %</th></thead>
-                <tbody id="state-table-body"><tr><td>VA</td><td>1337</td><td>50%</td><td>1337</td><td>50%</td></tr></tbody>
+                <tbody id="state-table-body"><tr><td rowspan="5">Select a canidate to view state data.</td></tr></tbody>
             </table>
         </div>
 	</body>

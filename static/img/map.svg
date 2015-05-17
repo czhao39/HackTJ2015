@@ -9,6 +9,7 @@
 	stroke:#646464;
 	stroke-width:1;
 	stroke-opacity:1;
+    cursor:pointer;
 }
 
 .territory
