@@ -65,7 +65,7 @@ $(document).ready(function() {
                     }
                     $("#state-table-body tr").each(function(index, value) {
                         if ($(this).attr("data-state") == sid) {
-                            $(this).fadeIn(500).fadeOut(500).fadeIn(500);
+                            $(this).fadeIn(100).delay(200).fadeOut(500).delay(200).fadeIn(500);
                             $(document).scrollTop($(this).position().top);
                         }
                     });
