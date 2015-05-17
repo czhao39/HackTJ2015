@@ -55,9 +55,11 @@ def fillDb(cursor):
     for candidate in mainDict.items():
         for state in candidate[1].items():
             try:
-                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s);", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%s, %s, %s, %s);", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
             except Exception as e:
                 print e
+        conn.commit()
+        print('round committed!')
 
 def fromJson(cursor):
     dc = simplejson.JSONDecoder()
