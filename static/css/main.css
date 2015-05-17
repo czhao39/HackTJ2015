@@ -114,8 +114,11 @@ body {
     overflow-x:hidden;
 }
 #legend{
-    padding:10px;
+    padding-left:10px;
+    padding-right:10px;
     margin:15px;
+    margin-left:45px;
+    margin-right:45px;
     color:white;
     background:linear-gradient(to right, blue, red);
 }
