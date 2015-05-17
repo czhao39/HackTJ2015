@@ -158,7 +158,7 @@ $(document).ready(function() {
                     neg = pos
                     pos = tmp
                 }
-                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.min(255, 255*complete/opacity_threshold)) + ")";
+                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.min(255, 255*opacity_threshold/complete)) + ")";
                 if (key == "MI") {
                     key = "MI-";
                     data["MI-"] = data["MI"];
