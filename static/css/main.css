@@ -12,6 +12,7 @@ body {
 #logo{
     width:48px;
     height:48px;
+    cursor:pointer;
     -webkit-transition-duration: 0.8s;
     -moz-transition-duration: 0.8s;
     -o-transition-duration: 0.8s;
@@ -101,6 +102,12 @@ body {
     display:none;
     position:absolute;
     z-index:3;
+    pointer-events:none;
+}
+#pie-overlay {
+    background-color:#fff;
+    border-radius:5px;
+    box-shadow:2px 2px 2px 2px #000;
 }
 #img-overlay img {
     height:200px;
