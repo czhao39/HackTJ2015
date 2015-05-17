@@ -75,7 +75,7 @@ $(document).ready(function() {
                 tneg += data[key][1];
             }
             amt = 1 - (tpos / (tpos + tneg))
-            tmp.css("background", "-webkit-linear-gradient(left, #3399cc " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "-webkit-linear-gradient(left, #4848ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
         });
     });
 
@@ -89,7 +89,7 @@ $(document).ready(function() {
                 tneg += data[key][1];
             }
             amt = 1 - (tpos / (tpos + tneg))
-            tmp.css("background", "-webkit-linear-gradient(left, #cc9933 " + Math.round(amt * 100) + "%,#ffffff 0%");
+            tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%");
         })
     })
 
