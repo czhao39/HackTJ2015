@@ -1,5 +1,4 @@
-{"biden": {"terms": ["@JoeBiden", "@VP", "#biden"],
-	   "exclude": ["@JoeBiden", "@VP", "#biden", "@TheDemocrats"],
+{"biden": ["@JoeBiden", "@VP", "#biden"],
  "bush": ["@JebBush", "#jebbush"],
  "carson": ["@RealBenCarson"],
  "christie": [],
