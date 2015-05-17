@@ -68,7 +68,6 @@ $(document).ready(function() {
     $(".dem").each(function(index,value) {
         var tmp = $(this);
         $.getJSON("/nation?p=" + encodeURIComponent($(dems).text()), function(data) {
-            cache = data;
             tpos = 0
             tneg = 0
             for (var key in data) {
@@ -83,7 +82,6 @@ $(document).ready(function() {
     $(".rep").each(function(index, value) {
         var tmp = $(this);
         $.getJSON("/nation?p=" + encodeURIComponent($(reps).text()), function(data) {
-            cache = data;
             tpos = 0
             tneg = 0
             for (var key in data) {
