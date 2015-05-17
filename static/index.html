@@ -5,6 +5,9 @@
 		<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:700,300,400" rel="stylesheet" type="text/css">
+        <link href="/css/main.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="favicon.ico"/>
 		<style>
 			#container {
 				position:absolute;
@@ -39,6 +42,50 @@
 		</script>
 	</head>
 	<body>
+        <nav id="topbar" class="navbar navbar-static-top" role="navigation">
+            <div class="container">
+                <a class="btn" href="index.html">
+                    twoll
+                </a>
+            </div>
+        </nav>
+        <div id="input" class="row">
+            <div class="col-md-6">
+                <div id="dem">
+                    <button id="dembut" type="button" class="btn btn-default">Democrat</button>
+                    <div class="row">
+                        <div class=col-md-12">
+                            <button type="button" class="btn btn-default">Joe Biden</button>
+                            <button type="button" class="btn btn-default">Hillary Clinton</button>
+                            <button type="button" class="btn btn-default">Martin O'Malley</button>
+                            <button type="button" class="btn btn-default">Bernie Sanders</button>
+                            <button type="button" class="btn btn-default">Elizabeth Warren</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="rep">
+                    <button id="repbut" type="button" class="btn btn-default">Republican</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-default">Jeb Bush</button>
+                            <button type="button" class="btn btn-default">Chris Christie</button>
+                            <button type="button" class="btn btn-default">Mike Huckabee</button>
+                            <button type="button" class="btn btn-default">Rick Perry</button>
+                            <button type="button" class="btn btn-default">Rick Santorum</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-default">Dr. Ben Carson</button>
+                            <button type="button" class="btn btn-default">Ted Cruz</button>
+                            <button type="button" class="btn btn-default">Rand Paul</button>
+                            <button type="button" class="btn btn-default">Marco Rubio</button>
+                            <button type="button" class="btn btn-default">Scott Walker</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div id="container">
 			<object id="map" type="text/svg+xml" data="/img/map.svg"></object>
 		</div>
