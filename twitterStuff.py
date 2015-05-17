@@ -27,7 +27,7 @@ def fillDb(cursor):
                 while True:
                     try:
                         api = twitter.Api(consumer_key=apiJsonDict[apiIndex]["API_KEY"], consumer_secret=apiJsonDict[apiIndex]["API_SECRET"], access_token_key=apiJsonDict[apiIndex]["ACCESS_TOKEN"], access_token_secret=apiJsonDict[apiIndex]["ACCESS_TOKEN_SECRET"])
-                        statuses.extend(getSearch(twit=api, query=term + " place:"+state[1], count=100))
+                        statuses.extend(getSearch(twit=api, query=term + " place:"+state[1], count=200))
                     except IndexError:
                         pass
                     except twitter.error.TwitterError:
@@ -35,7 +35,7 @@ def fillDb(cursor):
                         if (apiIndex > 13):
                             apiIndex = 0
                             print "switch to api key 0"
-                            time.sleep(60)
+                            time.sleep(30)
                             print "checking for rate limit deexceedtion"
                         else:
                             apiIndex += 1
@@ -55,7 +55,8 @@ def fillDb(cursor):
     for candidate in mainDict.items():
         for state in candidate[1].items():
             try:
-                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%s, %s, %s, %s);", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
+                senti = metaMinds.sentiment(state[1])
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg, neu) VALUES (%s, %s, %s, %s, %s);", (candidate[0], state[0], senti[u'positive'], senti[u'negative'], senti[u'neutral']))
             except Exception as e:
                 print e
         conn.commit()
@@ -73,10 +74,9 @@ def fromJson(cursor):
             try:
                 if len(state[1]) == 0:
                     continue
-                mmPos = metaMinds.sentiment(state[1])[u'positive']
-                mmNeg = metaMinds.sentiment(state[1])[u'negative']
-                a = (candidate[0], state[0], mmPos, mmNeg)
-                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg, color) VALUES (%s,%s,%s,%s, 0)", a)
+                senti = metaMinds.sentiment(state[1])
+                a = (candidate[0], state[0], senti[u'positive'], senti[u'negative'], senti[u'neutral'])
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg, neu) VALUES (%s,%s,%s,%s,%s)", a)
             except simplejson.scanner.JSONDecodeError as e:
                 print 'JSON Error:',e
             except KeyError as e:
@@ -86,5 +86,5 @@ def fromJson(cursor):
 
 conn = run.getConnection()
 cursor = conn.cursor()
-#fillDb(cursor)
-fromJson(cursor)
+fillDb(cursor)
+#fromJson(cursor)
