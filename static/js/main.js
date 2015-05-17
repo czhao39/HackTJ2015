@@ -2,6 +2,8 @@ var root; var cache; var isDem;
 var code_to_state = { "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District Of Columbia", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming" };
 google.load("visualization", "1", {packages:["corechart"]});
 
+var opacity_threshold = 128
+
 function drawChart(clr, sid) {
     var chart = new google.visualization.PieChart($("#pie-overlay")[0])
         chart.draw(google.visualization.arrayToDataTable([['Type', 'Tweets'],['Positive', cache[sid][0]],['Negative', cache[sid][1]]]), {
@@ -78,11 +80,13 @@ $(document).ready(function() {
         $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
+            tneu = 0
             for (var key in data) {
                 tpos += data[key][0];
                 tneg += data[key][1];
+                tneu += data[key][2];
             }
-            amt = (tpos / (tpos + tneg));
+            amt = (tpos / (tpos + tneg + tneu));
             tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
         });
     });
@@ -95,11 +99,13 @@ $(document).ready(function() {
         $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
+            tneu = 0
             for (var key in data) {
                 tpos += data[key][0];
                 tneg += data[key][1];
+                tneu += data[key][2]
             }
-            amt = (tpos / (tpos + tneg));
+            amt = (tpos / (tpos + tneg + tneu));
             tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%");
         })
     })
@@ -138,14 +144,13 @@ $(document).ready(function() {
                 neg = data[key][1];
                 neu = data[key][2];
                 complete = pos + neg + neu;
-                total = pos + neg;
-                ppos = (pos / total * 100).toFixed(2);
-                pneg = (neg / total * 100).toFixed(2);
+                ppos = (pos / complete * 100).toFixed(2);
+                pneg = (neg / complete * 100).toFixed(2);
                 if (pos == 0 && neg == 0) {
                     ppos = 0.00;
                     pneg = 0.00;
                 }
-                $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + pos + " tweets</td><td>" + ppos + "%</td><td>" + neg + " tweets</td><td>" + pneg + "%</td><td>" + complete + " tweets</td></tr>");
+                $("#state-table-body").append("<tr data-state=\"" + key + "\"><td>" + code_to_state[key] + "</td><td>" + ppos + "%</td><td>" + pneg + "%</td><td>" + complete + " tweets</td></tr>");
                 // hardcoded michigan because separation
                 //var clr = ct;
                 if (!isDem) {
@@ -153,7 +158,7 @@ $(document).ready(function() {
                     neg = pos
                     pos = tmp
                 }
-                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(total/complete*128+128) + ")";
+                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.min(255, 255*complete/opacity_threshold)) + ")";
                 if (key == "MI") {
                     key = "MI-";
                     data["MI-"] = data["MI"];
