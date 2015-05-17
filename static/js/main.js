@@ -125,7 +125,7 @@ $(document).ready(function() {
         console.log($("#img-overlay").width());
         console.log($(window).width());
         if($("#img-overlay").width() + mx + 30 >= $(window).width()) {
-            $("#img-overlay").css({'top':my+20, 'right':(mx - 20 - $("#img-overlay").width())});
+            $("#img-overlay").css({'top':my+20, 'left':(mx - 20 - $("#img-overlay").width())});
         } else {
             $("#img-overlay").css({'top':my+20, 'left':mx+20});
         }
