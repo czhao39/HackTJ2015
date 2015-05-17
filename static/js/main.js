@@ -79,7 +79,7 @@ $(document).ready(function() {
                 tpos += data[key][0];
                 tneg += data[key][1];
             }
-            amt = 1 - (tpos / (tpos + tneg))
+            amt = (tpos / (tpos + tneg));
             tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
         });
     });
@@ -96,7 +96,7 @@ $(document).ready(function() {
                 tpos += data[key][0];
                 tneg += data[key][1];
             }
-            amt = 1 - (tpos / (tpos + tneg))
+            amt = (tpos / (tpos + tneg));
             tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%");
         })
     })
@@ -146,6 +146,7 @@ $(document).ready(function() {
                 if (key == "MI") {
                     key = "MI-";
                     data["MI-"] = clr;
+                    svg.getElementById("SP-").style.fill = '#e0e0e0';
                     svg.getElementById("SP-").style.fill = ct+pos/total+")";
                 }
                 var elm = svg.getElementById(key);
