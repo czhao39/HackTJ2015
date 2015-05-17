@@ -27,7 +27,16 @@
                     legend: { position:'none' }
                 });
         }
+        var a = '';
         $(document).ready(function() {
+            $("#logo").click(function() {
+                if (a != '') {
+                    a = '';
+                }
+                else {
+                    a = '_';
+                }
+            });
             svg = document.getElementById('map');
             svg.addEventListener("load", function() {
                 svg = svg.contentDocument;
@@ -75,7 +84,7 @@
                 $("#img-overlay").css({'top':my+20, 'left':mx+20});
             });
             $("button[data-over]").mouseover(function(e) {
-                $("#img-overlay img").attr("src", "/img/pic/" + $(this).attr("data-over"));
+                $("#img-overlay img").attr("src", "/img/pic/" + $(this).attr("data-over") + a + ".jpg");
                 var ct = $(this).hasClass("dem");
                 $("#img-overlay img").css("border-color", ct ? "#717ECD" : "#CF5C60");
                 $("#img-overlay").show();
@@ -116,9 +125,7 @@
     <div id="pie-overlay"></div>
         <nav id="topbar" class="navbar navbar-static-top" role="navigation">
             <div class="container">
-                <a class="btn" href="/">
-                    <img src="img/twoll.png" id="logo" /> twoll
-                </a>
+                <img src="img/twoll.png" id="logo" /><a class="btn" href="/"> twoll</a>
                 <span id="ticker"></span>
             </div>
         </nav>
@@ -128,11 +135,11 @@
                     <button id="dembut" type="button" class="btn btn-default dem">Democrat</button>
                     <div class="row">
                         <div class=col-md-12">
-                            <button type="button" class="btn btn-default dem" data-over="biden.jpg">Joe Biden</button>
-                            <button type="button" class="btn btn-default dem" data-over="clinton.jpg">Hillary Clinton</button>
-                            <button type="button" class="btn btn-default dem" data-over="omalley.jpg">Martin O'Malley</button>
-                            <button type="button" class="btn btn-default dem" data-over="sanders.jpg">Bernie Sanders</button>
-                            <button type="button" class="btn btn-default dem" data-over="warren.jpg">Elizabeth Warren</button>
+                            <button type="button" class="btn btn-default dem" data-over="biden">Joe Biden</button>
+                            <button type="button" class="btn btn-default dem" data-over="clinton">Hillary Clinton</button>
+                            <button type="button" class="btn btn-default dem" data-over="omalley">Martin O'Malley</button>
+                            <button type="button" class="btn btn-default dem" data-over="sanders">Bernie Sanders</button>
+                            <button type="button" class="btn btn-default dem" data-over="warren">Elizabeth Warren</button>
                         </div>
                     </div>
                 </div>
@@ -142,18 +149,18 @@
                     <button id="repbut" type="button" class="btn btn-default rep">Republican</button>
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-default rep" data-over="bush.jpg">Jeb Bush</button>
-                            <button type="button" class="btn btn-default rep" data-over="christie.jpg">Chris Christie</button>
-                            <button type="button" class="btn btn-default rep" data-over="huckabee.jpg">Mike Huckabee</button>
-                            <button type="button" class="btn btn-default rep" data-over="perry.jpg">Rick Perry</button>
-                            <button type="button" class="btn btn-default rep" data-over="santorum.jpg">Rick Santorum</button>
+                            <button type="button" class="btn btn-default rep" data-over="bush">Jeb Bush</button>
+                            <button type="button" class="btn btn-default rep" data-over="christie">Chris Christie</button>
+                            <button type="button" class="btn btn-default rep" data-over="huckabee">Mike Huckabee</button>
+                            <button type="button" class="btn btn-default rep" data-over="perry">Rick Perry</button>
+                            <button type="button" class="btn btn-default rep" data-over="santorum">Rick Santorum</button>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-default rep" data-over="carson.jpg">Dr. Ben Carson</button>
-                            <button type="button" class="btn btn-default rep" data-over="cruz.jpg">Ted Cruz</button>
-                            <button type="button" class="btn btn-default rep" data-over="paul.jpg">Rand Paul</button>
-                            <button type="button" class="btn btn-default rep" data-over="rubio.jpg">Marco Rubio</button>
-                            <button type="button" class="btn btn-default rep" data-over="walker.jpg">Scott Walker</button>
+                            <button type="button" class="btn btn-default rep" data-over="carson">Dr. Ben Carson</button>
+                            <button type="button" class="btn btn-default rep" data-over="cruz">Ted Cruz</button>
+                            <button type="button" class="btn btn-default rep" data-over="paul">Rand Paul</button>
+                            <button type="button" class="btn btn-default rep" data-over="rubio">Marco Rubio</button>
+                            <button type="button" class="btn btn-default rep" data-over="walker">Scott Walker</button>
                         </div>
                     </div>
                 </div>

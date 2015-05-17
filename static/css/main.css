@@ -12,6 +12,7 @@ body {
 #logo{
     width:48px;
     height:48px;
+    cursor:pointer;
     -webkit-transition-duration: 0.8s;
     -moz-transition-duration: 0.8s;
     -o-transition-duration: 0.8s;
