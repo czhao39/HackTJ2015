@@ -64,6 +64,43 @@ $(document).ready(function() {
             }
         }
     });
+
+    $(".dem").each(function(index,value) {
+        var tmp = $(this);
+        $.getJSON("/nation?p=" + encodeURIComponent($(dems).text()), function(data) {
+            cache = data;
+            tpos = 0
+            tneg = 0
+            for (var key in data) {
+                tpos += data[key][0];
+                tneg += data[key][1];
+            }
+            amt = 1 - (tpos / (tpos + tneg))
+            tmp.css("background", "-webkit-linear-gradient(left, #3399cc " + Math.round(amt * 100) + "%,#ffffff 0%)");
+        });
+    });
+
+    $(".rep").each(function(index, value) {
+        var tmp = $(this);
+        $.getJSON("/nation?p=" + encodeURIComponent($(reps).text()), function(data) {
+            cache = data;
+            tpos = 0
+            tneg = 0
+            for (var key in data) {
+                tpos += data[key][0];
+                tneg += data[key][1];
+            }
+            amt = 1 - (tpos / (tpos + tneg))
+            tmp.css("background", "-webkit-linear-gradient(left, #cc9933 " + Math.round(amt * 100) + "%,#ffffff 0%");
+        })
+
+
+
+
+
+
+    })
+
     var mx = 0;
     var my = 0;
     $(window).mousemove(function(e) {
