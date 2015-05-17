@@ -15,6 +15,10 @@
     background-size:auto 100%;
     background-position:center;
 }
+.dem:hover{
+    border-color:#717ECD;
+    color:#717ECD;
+}
 #dem{
     /*border:5px solid #021bbd;*/
     /*border:5px solid #4EB1CB;*/
@@ -24,6 +28,10 @@
     margin-left:30px;
     margin-right:15px;
     background-image:url("/img/democrat.png");
+}
+.rep:hover{
+    border-color:#CF5C60;
+    color:#CF5C60;
 }
 #rep{
     /*border:5px solid #de0100;*/
