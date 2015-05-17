@@ -1,3 +1,4 @@
+twitter
 psycopg2>=2.6
 simplejson>=3.6.5
 flask>=0.10.1

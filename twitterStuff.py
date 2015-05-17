@@ -13,7 +13,7 @@ masterDict = {}
 for tuple in jsonDict.items():
     statuses = []
     for term in tuple[1]:
-        #todo: play around with resType
+        # todo: play around with resType
         statuses.extend(getSearch(twit=api, query=term, count=100))
     tweets = []
     for status in statuses:
