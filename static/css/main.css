@@ -124,3 +124,28 @@ body {
     font-size:150%;
     padding:10px;
 }
+.tickercontainer {
+    width: 500px;
+    height: 27px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.tickercontainer .mask {
+    position: relative;
+    top: 8px;
+    height: 18px;
+    overflow: hidden;
+}
+ul.newsticker {
+    position: relative;
+    font: bold 10px Verdana;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.newsticker li {
+    float: left;
+    margin: 0;
+    padding-right: 15px;
+}
