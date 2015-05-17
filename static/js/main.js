@@ -80,14 +80,16 @@ $(document).ready(function() {
         $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
-            tneu = 0
             for (var key in data) {
                 tpos += data[key][0];
                 tneg += data[key][1];
-                tneu += data[key][2];
             }
-            amt = (tpos / (tpos + tneg + tneu));
+            amt = (tpos / (tpos + tneg));
+            tmp.css("background", "-ms-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);")
+            tmp.css("background", "-o-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);")
+            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#4478ff), color-stop(0%,#ffffff));")
             tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "linear-gradient(to right,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);");
         });
     });
 
@@ -99,14 +101,16 @@ $(document).ready(function() {
         $.getJSON("/nation?p=" + encodeURIComponent(tmp.attr("data-over")), function(data) {
             tpos = 0
             tneg = 0
-            tneu = 0
             for (var key in data) {
                 tpos += data[key][0];
                 tneg += data[key][1];
-                tneu += data[key][2]
             }
-            amt = (tpos / (tpos + tneg + tneu));
-            tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%");
+            amt = (tpos / (tpos + tneg));
+            tmp.css("background", "-ms-linear-gradient(left,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);")
+            tmp.css("background", "-o-linear-gradient(left,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);")
+            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#ff2020), color-stop(0%,#ffffff));")
+            tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "linear-gradient(to right,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);");
         })
     })
 
