@@ -61,6 +61,14 @@ body {
     margin-right:15px;
     background-image:url("/img/republican.png");
 }
+#candidates button{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    width:150px;
+}
 #dembut{
     font-size:25px;
     display:block;
@@ -68,6 +76,7 @@ body {
     margin-right:auto;
     margin-top: 20px;
     margin-bottom: 10px;
+    width:fluid;
 }
 #repbut{
     display:block;
@@ -76,22 +85,7 @@ body {
     margin-right:auto;
     margin-top: 20px;
     margin-bottom: 10px;
-}
-#dem button{
-    display:block;
-    margin-left:auto;
-    margin-right:auto;
-    margin-top:10px;
-    margin-bottom:10px;
-    width:150px;
-}
-#rep button{
-    display:block;
-    margin-left:auto;
-    margin-right:auto;
-    margin-top:10px;
-    margin-bottom:10px;
-    width:150px;
+    width:fluid;
 }
 #map{
     display:block;
