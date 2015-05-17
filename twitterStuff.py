@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import twitter
 from twitterHelper import *
 import simplejson
@@ -53,25 +55,36 @@ def fillDb(cursor):
     for candidate in mainDict.items():
         for state in candidate[1].items():
             try:
-                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s)", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%s, %s, %s, %s);", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
             except Exception as e:
                 print e
+        conn.commit()
+        print('round committed!')
 
 def fromJson(cursor):
     dc = simplejson.JSONDecoder()
     mainDict = dc.decode(open('antistupidity.json').read())
-    print mainDict
+
+    print('mainDict items:', len(mainDict.items()))
 
     for candidate in mainDict.items():
+        print('canidate[1] items:', len(candidate[1].items()))
         for state in candidate[1].items():
             try:
-                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s)", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
+                if len(state[1]) == 0:
+                    continue
+                mmPos = metaMinds.sentiment(state[1])[u'positive']
+                mmNeg = metaMinds.sentiment(state[1])[u'negative']
+                a = (candidate[0], state[0], mmPos, mmNeg)
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg, color) VALUES (%s,%s,%s,%s, 0)", a)
             except simplejson.scanner.JSONDecodeError as e:
-                print e
+                print 'JSON Error:',e
             except KeyError as e:
-                print e, e.__dict__
+                print 'Error:', e, e.__dict__
+        conn.commit()
+        print('round committed!')
 
-
-cursor = run.getConnection().cursor()
+conn = run.getConnection()
+cursor = conn.cursor()
 #fillDb(cursor)
 fromJson(cursor)

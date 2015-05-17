@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import simplejson
 import requests
 from random import randint
@@ -21,6 +23,12 @@ def sentiment(texts):
             hue[o['label']] += 1
         else:
             hue[o['label']] = 1
+    if not u'positive' in hue:
+        hue[u'positive'] = 0
+    if not u'neutral' in hue:
+        hue[u'neutral'] = 0
+    if not u'negative' in hue:
+        hue[u'negative'] = 0
     return hue
 
 
