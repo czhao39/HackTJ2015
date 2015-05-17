@@ -122,6 +122,8 @@ $(document).ready(function() {
     $(window).mousemove(function(e) {
         mx = e.pageX;
         my = e.pageY;
+        Console.log($("#img-overlay").width());
+        Console.log($(window).width());
         if($("#img-overlay").width() + mx + 30 >= $(window).width()) {
             $("#img-overlay").css({'top':my+20, 'right':mx+20});
         } else {
