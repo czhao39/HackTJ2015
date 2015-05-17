@@ -65,6 +65,7 @@ $(document).ready(function() {
                     }
                     $("#state-table-body tr").each(function(index, value) {
                         if ($(this).attr("data-state") == sid) {
+                            $(this).fadeIn(100).fadeOut(100);
                             $(document).scrollTop($(this).position().top);
                         }
                     });
@@ -141,8 +142,10 @@ $(document).ready(function() {
     $(window).mousemove(function(e) {
         mx = e.pageX;
         my = e.pageY;
+        console.log($("#img-overlay").width());
+        console.log($(window).width());
         if($("#img-overlay").width() + mx + 30 >= $(window).width()) {
-            $("#img-overlay").css({'top':my+20, 'right':mx+20});
+            $("#img-overlay").css({'top':my+20, 'left':(mx - 20 - $("#img-overlay").width())});
         } else {
             $("#img-overlay").css({'top':my+20, 'left':mx+20});
         }
