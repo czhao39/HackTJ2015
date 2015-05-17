@@ -175,6 +175,11 @@ $(document).ready(function() {
                 var elm = svg.getElementById(key);
                 elm.style.fill = '#fff';
                 elm.style.fill = filstr;
+                if(pos == 0 && neg == 0) {
+                    elm.style.cursor="default";
+                } else {
+                    elm.style.cursor="pointer";
+                }
                 //elm.style.fill = ct+pos/total+")";
             }
         });
