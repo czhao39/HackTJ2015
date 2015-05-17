@@ -87,8 +87,8 @@ $(document).ready(function() {
             amt = (tpos / (tpos + tneg));
             tmp.css("background", "-ms-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);")
             tmp.css("background", "-o-linear-gradient(left,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);")
-            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#4478ff), color-stop(0%,#ffffff));")
             tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#4478ff), color-stop(0%,#ffffff));")
             tmp.css("background", "linear-gradient(to right,  #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%);");
         });
     });
@@ -108,8 +108,8 @@ $(document).ready(function() {
             amt = (tpos / (tpos + tneg));
             tmp.css("background", "-ms-linear-gradient(left,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);")
             tmp.css("background", "-o-linear-gradient(left,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);")
-            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#ff2020), color-stop(0%,#ffffff));")
             tmp.css("background", "-webkit-linear-gradient(left, #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "-webkit-gradient(linear, left middle, right middle, color-stop(" + Math.round(amt * 100) + "%,#ff2020), color-stop(0%,#ffffff));")
             tmp.css("background", "linear-gradient(to right,  #ff2020 " + Math.round(amt * 100) + "%,#ffffff 0%);");
         })
     })
@@ -163,7 +163,7 @@ $(document).ready(function() {
                     neg = pos
                     pos = tmp
                 }
-                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.min(255, 255*opacity_threshold/(opacity_threshold - complete))) + ")";
+                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.max(128, Math.min(255, 255 * (opacity_threshold - complete)) + ")";
                 if (key == "MI") {
                     key = "MI-";
                     data["MI-"] = data["MI"];
