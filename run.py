@@ -31,12 +31,14 @@ def testDatabase():
     except Exception as e:
         return "<pre>" + str(e) + "</pre>"
 
+from random import random
+
 @app.route('/nation')
 def getNation():
     db = dict()
     for i in STATES:
         # pos, neg
-        db[i] = [7483, 8294]
+        db[i] = [int(random()*10000), int(random()*10000)]
     return jsonify(**db)
 
 
@@ -45,7 +47,9 @@ def getNation():
 @app.route('/state')
 def getState():
     state = request.args.get('s')
-    return False
+    tmp = dict()
+    tmp['state'] = state
+    return jsonify(tmp)
 
 
 @app.route('/')
