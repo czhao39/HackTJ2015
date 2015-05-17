@@ -3,6 +3,7 @@
 from flask import Flask, request, jsonify
 import os
 import urlparse
+import psycopg2
 
 app = Flask(__name__, static_url_path='')
 
