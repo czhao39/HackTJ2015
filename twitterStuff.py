@@ -31,7 +31,7 @@ def fillDb(cursor):
                         pass
                     except twitter.error.TwitterError:
                         print "rate limit exceeded"
-                        if (apiIndex > 14):
+                        if (apiIndex > 13):
                             apiIndex = 0
                             print "switch to api key 0"
                             time.sleep(60)
@@ -55,8 +55,20 @@ def fillDb(cursor):
         for state in candidate[1].items():
             try:
                 cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
-            except Exception:
-                pass
+            except Exception as e:
+                print e
+
+def fromJson(cursor):
+    dc = simplejson.JSONDecoder()
+    mainDict = dc.decode(open('antistupidity.json').read())
+    print mainDict
+
+    for candidate in mainDict.items():
+        for state in candidate[1].items():
+            try:
+                cursor.execute("INSERT INTO tweets (candidate, state, pos, neg) VALUES (%(str)s, %(str)s, %(int)s, %(int)s", (candidate[0], state[0], metaMinds.sentiment(state[1])[u'positive'], metaMinds.sentiment(state[1])[u'negative']))
+            except Exception as e:
+                print e
 
 cursor = run.getConnection().cursor()
 fillDb(cursor)
