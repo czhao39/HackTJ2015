@@ -8,14 +8,6 @@
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:700,300,400" rel="stylesheet" type="text/css">
         <link href="/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="favicon.ico"/>
-		<style>
-			#container {
-			}
-			#map {
-				display:block;
-				margin:auto;
-			}
-		</style>
 		<script>
         var root;
 		$(document).ready(function() {
@@ -28,9 +20,24 @@
 				    var pn = paths[i].id;
 				    var elm = svg.getElementById(pn);
                     if (elm != null) {
-                        elm.style.fill = "green";
+                        elm.style.fill = "#FFFFFF";
                     }
 			    }
+            });
+            $("#dem button, #rep button").click(function(e) {
+                e.preventDefault();
+                $.getJSON("/nation?p=" + encodeURIComponent($(this).text()), function(data) {
+                    for (var key in data) {
+                        // hardcoded michigan because separation
+                        if (key == "MI") {
+                            key = "MI-";
+                            data["MI-"] = data["MI"];
+                            svg.getElementById("SP-").style.fill = data["MI"];
+                        }
+                        var elm = svg.getElementById(key);
+                        elm.style.fill = data[key];
+                    }
+                });
             });
 		});
 		</script>
@@ -39,7 +46,7 @@
         <nav id="topbar" class="navbar navbar-static-top" role="navigation">
             <div class="container">
                 <a class="btn" href="index.html">
-                    twoll
+                    <img src="img/twoll.png" id="logo" /> twoll
                 </a>
             </div>
         </nav>
@@ -83,5 +90,11 @@
 		<div id="container">
 			<object id="map" type="text/svg+xml" data="/img/map.svg"></object>
 		</div>
+        <div id="state-table">
+            <table class="table">
+                <thead><th>State</th><th>Positive Total</th><th>Positive %</th><th>Negative Total</th><th>Negative %</th></thead>
+                <tbody id="state-table-body"><tr><td>VA</td><td>1337</td><td>50%</td><td>1337</td><td>50%</td></tr></tbody>
+            </table>
+        </div>
 	</body>
 </html>

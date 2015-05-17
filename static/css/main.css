@@ -7,8 +7,8 @@
     color:white;
 }
 #logo{
-    width:64px;
-    height:64px;
+    width:48px;
+    height:48px;
 }
 #dem{
     /*border:5px solid #021bbd;*/
@@ -60,4 +60,7 @@
 #map{
     display:block;
     margin:auto;
+}
+#state-table {
+    margin:30px;
 }
