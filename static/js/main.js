@@ -75,7 +75,7 @@ $(document).ready(function() {
                 tneg += data[key][1];
             }
             amt = 1 - (tpos / (tpos + tneg))
-            tmp.css("background", "-webkit-linear-gradient(left, #4848ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
+            tmp.css("background", "-webkit-linear-gradient(left, #4478ff " + Math.round(amt * 100) + "%,#ffffff 0%)");
         });
     });
 
