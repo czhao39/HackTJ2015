@@ -5,13 +5,29 @@
 		<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:700,300,400" rel="stylesheet" type="text/css">
         <link href="/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="favicon.ico"/>
-		<script>
-        var root;
+        <script>
+        var root; var cache; var isDem;
         var code_to_state = { "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District Of Columbia", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming" };
-		$(document).ready(function() {
+        google.load("visualization", "1", {packages:["corechart"]});
+        
+        function drawChart(clr, pos, neg) {
+            var chart = new google.visualization.PieChart($("#pie-overlay")[0])
+                chart.draw(google.visualization.arrayToDataTable([['Type', 'Tweets'],['Positive', pos],['Negative', neg]]), {
+                    title: 'Test',
+                    is3D: true,
+                    chartArea:{left:0,top:0,width:"100%",height:"100%"},
+                    backgroundColor: { fill:'transparent' },
+                    width:200,
+                    height:200,
+                    colors: clr,
+                    legend: { position:'none' }
+                });
+        }
+        $(document).ready(function() {
             svg = document.getElementById('map');
             svg.addEventListener("load", function() {
                 svg = svg.contentDocument;
@@ -30,12 +46,24 @@
                                 console.log(data);
                             });
                         });
+                        svg.addEventListener("mousemove", function(e) {
+                            var rekt = $("#map")[0].getBoundingClientRect();
+                            $("#pie-overlay").css({'top':rekt.top+window.scrollY+e.clientY+20,'left':window.scrollX+rekt.left+e.clientX+20});
+                        });
+                        elm.addEventListener("mouseover", function(e) {
+                            var sid = this.id;
+                            drawChart([!isDem ? "#FF0000" : "#0000FF", !isDem ? "#0000FF" : "#FF0000"], cache[sid][0], cache[sid][1]);
+                            $("#pie-overlay").show();
+                        });
+                        elm.addEventListener("mouseout", function(e) {
+                            $("#pie-overlay").hide();
+                        });
                     }
 			    }
             });
             var mx = 0;
             var my = 0;
-            $(document).mousemove(function(e) {
+            $(window).mousemove(function(e) {
                 mx = e.pageX;
                 my = e.pageY;
                 $("#img-overlay").css({'top':my+20, 'left':mx+20});
@@ -52,7 +80,9 @@
                 e.preventDefault();
                 $("#state-table-body").empty();
                 var ct = $(this).hasClass("dem") ? "rgba(0,0,255," : "rgba(255,0,0,";
+                isDem = $(this).hasClass("dem");
                 $.getJSON("/nation?p=" + encodeURIComponent($(this).text()), function(data) {
+                    cache = data;
                     for (var key in data) {
                         pos = data[key][0];
                         neg = data[key][1];
@@ -77,14 +107,16 @@
 	</head>
 	<body>
     <div id="img-overlay"><img /></div>
+    <div id="pie-overlay"></div>
         <nav id="topbar" class="navbar navbar-static-top" role="navigation">
             <div class="container">
                 <a class="btn" href="/">
                     <img src="img/twoll.png" id="logo" /> twoll
                 </a>
+                <span id="ticker"></span>
             </div>
         </nav>
-        <div id="input" class="row">
+        <div id="input" class="row" style="margin-left:15px;margin-right:15px">
             <div class="col-md-6">
                 <div id="dem">
                     <button id="dembut" type="button" class="btn btn-default dem">Democrat</button>
