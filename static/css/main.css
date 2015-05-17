@@ -112,3 +112,12 @@ body {
 #ticker{
     overflow-x:hidden;
 }
+#legend{
+    padding:15px;
+    margin:15px;
+}
+#legend div{
+    text-align:center;
+    font-size:150%;
+    padding:10px;
+}
