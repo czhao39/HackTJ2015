@@ -17,11 +17,10 @@ def sentiment(texts):
     hue = {}
     for o in out['predictions']:
         if o['label'] in hue:
-            hue[o['label']][0] += o['probability']
-            hue[o['label']][1] += 1
+            hue[o['label']] += 1
         else:
-            hue[o['label']] = [o['probability'], 1]
-    return {key: val[0] / float(val[1]) for key, val in hue.items()}
+            hue[o['label']] = 1
+    return hue
 
 if __name__ == "__main__":
     print sentiment(['this is great', 'this also exists', 'this is shit', 'this is neutral', 'this also exists'])
