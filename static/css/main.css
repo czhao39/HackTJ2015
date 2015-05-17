@@ -83,6 +83,7 @@ body {
     margin-right:auto;
     margin-top:10px;
     margin-bottom:10px;
+    width:150px;
 }
 #rep button{
     display:block;
@@ -90,6 +91,7 @@ body {
     margin-right:auto;
     margin-top:10px;
     margin-bottom:10px;
+    width:150px;
 }
 #map{
     display:block;
