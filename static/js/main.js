@@ -37,7 +37,7 @@ $(document).ready(function() {
             var pn = paths[i].id;
             var elm = svg.getElementById(pn);
             if (elm != null) {
-                elm.style.cursor="normal";
+                elm.style.cursor="default";
                 elm.style.fill="#ffffff";
                 elm.addEventListener("click", function() {
                     var sid = this.id;
