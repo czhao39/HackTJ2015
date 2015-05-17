@@ -57,6 +57,9 @@ $(document).ready(function() {
                     if (sid == "SP-" || sid == "MI-") {
                         sid = "MI";
                     }
+                    if (cache[sid][0] == 0 && cache[sid][1] == 0) {
+                        return;
+                    }
                     drawChart([!isDem ? "#FF0000" : "#0000FF", !isDem ? "#0000FF" : "#FF0000"], sid);
                     $("#pie-overlay").show();
                 });
