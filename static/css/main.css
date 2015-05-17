@@ -64,3 +64,12 @@
 #state-table {
     margin:30px;
 }
+#img-overlay {
+    display:none;
+    position:absolute;
+    z-index:3;
+}
+#img-overlay img {
+    height:200px;
+    border:5px solid #c0c0c0;
+}
