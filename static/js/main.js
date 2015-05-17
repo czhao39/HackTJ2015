@@ -144,6 +144,7 @@ $(document).ready(function() {
                 neg = data[key][1];
                 neu = data[key][2];
                 complete = pos + neg + neu;
+                total = pos + neg;
                 ppos = (pos / complete * 100).toFixed(2);
                 pneg = (neg / complete * 100).toFixed(2);
                 if (pos == 0 && neg == 0) {
@@ -158,7 +159,7 @@ $(document).ready(function() {
                     neg = pos
                     pos = tmp
                 }
-                filstr = "rgba(" + Math.round(neg/complete*255) + ",0," + Math.round(pos/complete*255) + "," + Math.round(Math.min(255, 255*opacity_threshold/complete)) + ")";
+                filstr = "rgba(" + Math.round(neg/total*255) + ",0," + Math.round(pos/total*255) + "," + Math.round(Math.min(255, 255*opacity_threshold/complete)) + ")";
                 if (key == "MI") {
                     key = "MI-";
                     data["MI-"] = data["MI"];
