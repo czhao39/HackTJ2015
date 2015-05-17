@@ -35,7 +35,7 @@ def fillDb(cursor):
                         if (apiIndex > 13):
                             apiIndex = 0
                             print "switch to api key 0"
-                            time.sleep(60)
+                            time.sleep(30)
                             print "checking for rate limit deexceedtion"
                         else:
                             apiIndex += 1
