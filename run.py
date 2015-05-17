@@ -9,6 +9,7 @@ import urlparse
 import psycopg2
 
 app = Flask(__name__, static_url_path='')
+app.config['DEBUG'] = True
 
 # GET request this for the national data and stuff
 # return json if possible
@@ -35,12 +36,20 @@ from random import random
 
 @app.route('/nation')
 def getNation():
+    p = request.args.get('p')
+    conn = getConnection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT state, pos, neg FROM tweets WHERE candidate = %s", [p])
+    rs = cursor.fetchall()
+    conn.close()
     db = dict()
-    for i in STATES:
-        # pos, neg
-        db[i] = [int(random()*10000), int(random()*10000)]
+    for i in rs:
+        db[i[0]] = [i[1], i[2]]
+    for j in STATES:
+        if not j in db:
+            db[j] = [0, 0]
+    assert len(db) >= 50
     return jsonify(**db)
-
 
 # GET request for when someone clicks on a state
 # example: /state?s=va
