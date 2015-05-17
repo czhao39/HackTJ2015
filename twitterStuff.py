@@ -15,7 +15,6 @@ def fillDb(cursor):
     apiJsonDict = simplejson.JSONDecoder().decode(apiJsonStr)
     for candidate in jsonDict.items():
         mainDict[candidate[0]] = {}
-    api = twitter.Api(consumer_key=apiJsonDict[0]["API_KEY"], consumer_secret=apiJsonDict[0]["API_SECRET"], access_token_key=apiJsonDict[0]["ACCESS_TOKEN"], access_token_secret=apiJsonDict[0]["ACCESS_TOKEN_SECRET"])
     apiIndex = 0
     for candidate in mainDict.keys():
         print "doing candidate " + candidate
