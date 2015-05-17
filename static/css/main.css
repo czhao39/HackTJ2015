@@ -7,7 +7,8 @@
     color:white;
 }
 #logo{
-    width=64px;
+    width:64px;
+    height:64px;
 }
 #dem{
     /*border:5px solid #021bbd;*/
