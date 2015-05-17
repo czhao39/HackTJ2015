@@ -14,12 +14,12 @@
         var code_to_state = { "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District Of Columbia", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming" };
         google.load("visualization", "1", {packages:["corechart"]});
         
-        function drawChart(clr, pos, neg) {
+        function drawChart(clr, sid) {
             var chart = new google.visualization.PieChart($("#pie-overlay")[0])
-                chart.draw(google.visualization.arrayToDataTable([['Type', 'Tweets'],['Positive', pos],['Negative', neg]]), {
-                    title: 'Test',
+                chart.draw(google.visualization.arrayToDataTable([['Type', 'Tweets'],['Positive', cache[sid][0]],['Negative', cache[sid][1]]]), {
+                    title: code_to_state[sid],
                     is3D: true,
-                    chartArea:{left:0,top:0,width:"100%",height:"100%"},
+                    //chartArea:{left:0,top:0,width:"100%",height:"100%"},
                     backgroundColor: { fill:'transparent' },
                     width:200,
                     height:200,
@@ -48,11 +48,17 @@
                         });
                         svg.addEventListener("mousemove", function(e) {
                             var rekt = $("#map")[0].getBoundingClientRect();
-                            $("#pie-overlay").css({'top':rekt.top+window.scrollY+e.clientY+20,'left':window.scrollX+rekt.left+e.clientX+20});
+                            $("#pie-overlay").css({'top':rekt.top+window.scrollY+e.clientY+5,'left':window.scrollX+rekt.left+e.clientX+5});
                         });
                         elm.addEventListener("mouseover", function(e) {
                             var sid = this.id;
-                            drawChart([!isDem ? "#FF0000" : "#0000FF", !isDem ? "#0000FF" : "#FF0000"], cache[sid][0], cache[sid][1]);
+                            if (cache === undefined) {
+                                return;
+                            }
+                            if (sid == "SP-" || sid == "MI-") {
+                                sid = "MI";
+                            }
+                            drawChart([!isDem ? "#FF0000" : "#0000FF", !isDem ? "#0000FF" : "#FF0000"], sid);
                             $("#pie-overlay").show();
                         });
                         elm.addEventListener("mouseout", function(e) {
