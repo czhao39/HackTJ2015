@@ -67,7 +67,7 @@ $(document).ready(function() {
 
     $(".dem").each(function(index,value) {
         var tmp = $(this);
-        $.getJSON("/nation?p=" + encodeURIComponent($(dems).text()), function(data) {
+        $.getJSON("/nation?p=" + encodeURIComponent(tmp.text()), function(data) {
             tpos = 0
             tneg = 0
             for (var key in data) {
@@ -81,7 +81,7 @@ $(document).ready(function() {
 
     $(".rep").each(function(index, value) {
         var tmp = $(this);
-        $.getJSON("/nation?p=" + encodeURIComponent($(reps).text()), function(data) {
+        $.getJSON("/nation?p=" + encodeURIComponent(tmp.text()), function(data) {
             tpos = 0
             tneg = 0
             for (var key in data) {
@@ -91,12 +91,6 @@ $(document).ready(function() {
             amt = 1 - (tpos / (tpos + tneg))
             tmp.css("background", "-webkit-linear-gradient(left, #cc9933 " + Math.round(amt * 100) + "%,#ffffff 0%");
         })
-
-
-
-
-
-
     })
 
     var mx = 0;
